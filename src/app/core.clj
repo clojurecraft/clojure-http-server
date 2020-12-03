@@ -1,4 +1,5 @@
 (ns app.core
+  (:gen-class)
   (:require
     [org.httpkit.server :as httpkit]))
 
@@ -24,11 +25,16 @@
 
 (defonce server (atom nil))
 
-(defn start! []
+(defn start! [port]
   (reset! server
           (httpkit/run-server #'handler
-                              {:port 6543})))
+                              {:port port}))
+  (println "Started server on port" port))
 
 (defn stop! []
   (@server)
   (reset! server nil))
+
+(defn -main [port & _]
+  (start! (Integer. port)))
+
