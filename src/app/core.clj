@@ -35,6 +35,6 @@
   (@server)
   (reset! server nil))
 
-(defn -main [port & _]
-  (start! (Integer. port)))
+(defn -main [& [port]]
+  (start! (Integer. (or port (System/getenv "PORT")))))
 
